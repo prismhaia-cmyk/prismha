@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-const WEBHOOK_URL = "https://prismha.app.n8n.cloud/webhook-test/62c4994c-a5e9-47c7-99e5-a25d2cb0b8a2"; // 🔹 pon aquí tu webhook real
+const WEBHOOK_URL = "https://prismha.app.n8n.cloud/webhook/62c4994c-a5e9-47c7-99e5-a25d2cb0b8a2"; // 🔹 pon aquí tu webhook real
 
 const Contacto = () => {
   const [formData, setFormData] = useState({
