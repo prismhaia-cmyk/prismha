@@ -8,7 +8,11 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import PoliticaPrivacidad from "./PoliticaPrivacidad";
 import Contacto from "./Contacto";
 import SaberMas from "./SaberMas";
+import Blog from "./blog";
+import BlogPost from "./BlogPost";
+import BlogPost2 from "./BlogPost2";
 
+import { useState } from "react";
 
 
 const App = () => {
@@ -20,6 +24,8 @@ const headerPaddingX = "2rem";
 const logoSize = useTransform(scrollY, [0, 100], [60, 50]);
 const headerWidth = useTransform(scrollY, [0, 50], ["67%", "55%"]);
 const scrollContainerRef = useRef(null);
+const [showMenu, setShowMenu] = React.useState(false);
+
   return (
     <div className="relative bg-black min-h-screen w-full overflow-hidden">
       {/* Efecto Aurora de fondo */}
@@ -35,73 +41,91 @@ const scrollContainerRef = useRef(null);
 
       {/* Encabezado fijo con animación */}
       <motion.header 
-  className="fixed top-4 left-1/2 z-50 -translate-x-1/2"
+  className="fixed top-4 left-1/2 z-50 -translate-x-1/2 w-[90%] md:w-[65%] max-w-[1400px]"
   style={{ 
-  paddingTop: headerPaddingY,
-  paddingBottom: headerPaddingY,
-  paddingLeft: headerPaddingX,
-  paddingRight: headerPaddingX,
-  width: headerWidth,
-  maxWidth: "1500px"
-}}
->
-
-        <motion.nav
-  className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-full flex items-center justify-between shadow-2xl px-6 overflow-hidden"
-  style={{ 
-    paddingTop: headerPaddingY, 
+    paddingTop: headerPaddingY,
     paddingBottom: headerPaddingY,
-    height: "60px"
   }}
 >
+  <motion.nav
+    className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-full flex items-center justify-between shadow-2xl px-5 md:px-6 overflow-hidden"
+    style={{ height: "60px" }}
+  >
+    {/* Logo */}
+    <div className="flex items-center gap-3 pl-2">
+      <motion.img
+        src="/logo.png"
+        alt="Prismha Logo"
+        className="object-contain w-10 md:w-12"
+        style={{ transform: "scale(2)" }}
+      />
+    </div>
 
-          {/* Logo */}
-          <div className="flex items-center gap-3 pl-4">
-            <motion.img
-                src="/logo.png"
-                alt="Prismha Logo"
-                style={{ width: logoSize, height: logoSize, transform: 'scale(2.2)' }}
-                className="object-contain"
-/>
-          </div>
+    {/* Menú normal en desktop */}
+    <div className="hidden md:flex items-center gap-4">
+      <button
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        className="text-white/80 hover:text-white transition-colors text-sm md:text-base font-normal tracking-tight px-2"
+        style={{
+          fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
+        }}
+      >
+        Home
+      </button>
 
-          {/* Botones de navegación */}
-          <div className="flex items-center gap-4">
-            <button
-  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-  className="text-white/80 hover:text-white transition-colors text-sm md:text-base font-normal tracking-tight px-4 py-2"
-  style={{
-    fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif',
-  }}
->
-  Home
+      <a
+        href="#servicios"
+        className="text-white/80 hover:text-white transition-colors text-sm md:text-base font-normal tracking-tight px-2"
+        style={{
+          fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
+        }}
+      >
+        Servicios
+      </a>
 
+      <Link
+        to="/blog"
+        className="text-white/80 hover:text-white transition-all duration-300 text-sm md:text-base font-normal tracking-tight px-2"
+        style={{
+          fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
+        }}
+      >
+        Blog
+      </Link>
 
-            </button>
-            <a
-  href="#servicios"
-  className="text-white/80 hover:text-white transition-colors text-sm md:text-base font-normal tracking-tight px-4 py-2"
-  style={{
-    fontFamily:
-      '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif',
-  }}
->
-  Servicios
-</a>
+      <Link
+        to="/contacto"
+        className="backdrop-blur-xl bg-white/15 border border-white/30 rounded-full px-4 py-2 text-white font-normal text-sm transition-all duration-300 hover:bg-[#0066FF]/20 hover:border-[#0066FF]/40 shadow-lg"
+        style={{
+          fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
+        }}
+      >
+        Contacto
+      </Link>
+    </div>
 
-            <Link
-  to="/contacto"
-  className="backdrop-blur-xl bg-white/15 border border-white/30 rounded-full px-5 py-2 text-white font-normal text-sm transition-all duration-300 hover:bg-[#0066FF]/20 hover:border-[#0066FF]/40 shadow-lg"
-  style={{
-    fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
-  }}
->
-  Contacto
-</Link>
+    {/* Menú móvil */}
+    <div className="md:hidden">
+      <button
+        onClick={() => setShowMenu(!showMenu)}
+        className="text-white text-2xl"
+      >
+        ☰
+      </button>
+    </div>
+  </motion.nav>
 
-          </div>
-        </motion.nav>
-      </motion.header>
+  {/* Dropdown móvil */}
+  {showMenu && (
+    <div className="absolute right-0 mt-3 w-48 bg-black/80 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg flex flex-col items-start p-4 space-y-3 md:hidden">
+      <a href="#" className="text-white/90 hover:text-[#19A1FF] transition">Home</a>
+      <a href="#servicios" className="text-white/90 hover:text-[#19A1FF] transition">Servicios</a>
+      <Link to="/blog" className="text-white/90 hover:text-[#19A1FF] transition">Blog</Link>
+      <Link to="/contacto" className="text-white/90 hover:text-[#19A1FF] transition">Contacto</Link>
+    </div>
+  )}
+</motion.header>
+
 
       {/* Contenido principal */}
       <div className="relative z-10 flex items-center justify-center min-h-screen px-8 pt-3">
@@ -590,6 +614,10 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <Route path="/politica-privacidad" element={<PoliticaPrivacidad />} />
   <Route path="/contacto" element={<Contacto />} />
   <Route path="/sabermas" element={<SaberMas />} />
+  <Route path="/blog" element={<Blog />} />
+ <Route path="/blogpost" element={<BlogPost />} />
+<Route path="/blogpost2" element={<BlogPost2 />} />
+
 
 </Routes>
     </BrowserRouter>
