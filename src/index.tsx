@@ -12,7 +12,6 @@ import Blog from "./blog";
 import BlogPost from "./BlogPost";
 import BlogPost2 from "./BlogPost2";
 
-import { useState } from "react";
 
 
 const App = () => {

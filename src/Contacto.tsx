@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-const WEBHOOK_URL = "https://prismha.app.n8n.cloud/webhook/62c4994c-a5e9-47c7-99e5-a25d2cb0b8a2"; // 🔹 pon aquí tu webhook real
+const WEBHOOK_URL =
+  "https://prismha.app.n8n.cloud/webhook/62c4994c-a5e9-47c7-99e5-a25d2cb0b8a2"; // 🔹 tu webhook
 
 const Contacto = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const [formData, setFormData] = useState({
     nombre: "",
     email: "",
@@ -15,7 +18,9 @@ const Contacto = () => {
   const [enviado, setEnviado] = useState(false);
   const [enviando, setEnviando] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -41,56 +46,95 @@ const Contacto = () => {
         mensaje: "",
       });
 
-      setTimeout(() => setEnviado(false), 5000); // Oculta el mensaje tras 5 segundos
+      setTimeout(() => setEnviado(false), 5000);
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
-      alert("Hubo un problema al enviar el mensaje. Inténtalo de nuevo más tarde.");
+      alert(
+        "Hubo un problema al enviar el mensaje. Inténtalo de nuevo más tarde."
+      );
     } finally {
       setEnviando(false);
     }
   };
 
   return (
-   <div className="relative bg-black min-h-screen w-full overflow-hidden flex flex-col items-center">
-         {/* Encabezado con logo y botones */}
-         <header className="w-full flex justify-between items-center px-10 py-6 max-w-6xl mx-auto">
-           {/* Logo */}
-           <img
-             src="/logo.png"
-             alt="Prismha Logo"
-             className="h-12 object-contain"
-             style={{ transform: "scale(1.5)" }}
-           />
-   
-           {/* Botones de navegación */}
-           <nav className="flex items-center gap-6">
-             <Link
-               to="/"
-               className="text-white/80 hover:text-white transition-all duration-300 text-sm md:text-base font-normal tracking-tight"
-               style={{
-                 fontFamily:
-                   '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
-               }}
-             >
-               Home
-             </Link>
-   
-             
-   
-             <Link
-               to="/politica-privacidad"
-               className="text-white/80 hover:text-white transition-all duration-300 text-sm md:text-base font-normal tracking-tight"
-               style={{
-                 fontFamily:
-                   '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
-               }}
-             >
-               Política de Privacidad
-             </Link>
-           </nav>
-         </header>
+    <div className="relative bg-black min-h-screen w-full overflow-hidden flex flex-col items-center">
+      {/* === ENCABEZADO RESPONSIVE === */}
+      <header className="w-full bg-black/80 backdrop-blur-md fixed top-0 left-0 z-50 border-b border-white/10">
+        <div className="max-w-6xl mx-auto flex justify-between items-center px-6 sm:px-10 py-4 sm:py-6">
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-3">
+            <img
+              src="/logo.png"
+              alt="Prismha Logo"
+              className="h-10 sm:h-12 object-contain transition-transform hover:scale-105"
+            />
+          </Link>
+
+          {/* Botón Hamburguesa (solo móvil) */}
+          <button
+            className="text-white sm:hidden focus:outline-none"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Abrir menú"
+          >
+            {menuOpen ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            )}
+          </button>
+
+          {/* Navegación */}
+          <nav
+            className={`${
+              menuOpen ? "flex" : "hidden"
+            } sm:flex flex-col sm:flex-row absolute sm:static top-16 left-0 w-full sm:w-auto bg-black sm:bg-transparent text-center sm:text-left space-y-4 sm:space-y-0 sm:space-x-6 px-6 sm:px-0 py-6 sm:py-0 transition-all duration-300`}
+          >
+            <Link
+              to="/"
+              className="text-white/80 hover:text-white transition-all duration-300 text-base font-normal tracking-tight"
+            >
+              Home
+            </Link>
+
+            <Link
+              to="/politica-privacidad"
+              className="text-white/80 hover:text-white transition-all duration-300 text-base font-normal tracking-tight"
+            >
+              Política de Privacidad
+            </Link>
+          </nav>
+        </div>
+      </header>
       {/* ===== FORMULARIO ===== */}
-      <main className="flex-grow flex flex-col items-center justify-center px-6 py-12">
+      <main className="flex-grow flex flex-col items-center justify-center px-6 py-12 pt-32">
+
   <div className="w-full max-w-5xl backdrop-blur-xl bg-black/60 p-12 rounded-3xl border border-[#0099FF]/40 shadow-2xl mx-auto">
     <h1
       className="text-white text-3xl md:text-4xl font-light text-center mb-2"
