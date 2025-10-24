@@ -207,9 +207,9 @@ const [showMenu, setShowMenu] = React.useState(false);
             Transformamos tareas complejas en procesos ágiles para reducir costos y acelerar resultados.
           </p>
           <ul>
-            <li>Tareas Básicas – Correos, recordatorios y reportes sin esfuerzo.</li>
-            <li>Operaciones Internas – Conecta sistemas y coordina departamentos.</li>
-            <li>Avanzada – Procesos complejos con soluciones a medida.</li>
+            <li>Tareas Básicas – Automatiza correos, avisos y reportes con IA.</li>
+            <li>Operaciones Internas – Conecta tus herramientas y evita tareas manuales.</li>
+            <li>Avanzada – Procesos avanzados adaptados a tu empresa.</li>
           </ul>
         </div>
 
