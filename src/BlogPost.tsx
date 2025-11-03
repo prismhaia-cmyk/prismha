@@ -330,10 +330,10 @@ const BlogPost: React.FC = () => {
                >
                  Correo electrónico:{" "}
                  <a 
-                   href="mailto:prismhaia@gmail.com" 
+                   href="mailto:prismhaagencia@prismha.com" 
                    className="text-[#0099FF] hover:underline"
                  >
-                   prismhaia@gmail.com
+                   prismhaagencia@prismha.com
                  </a>
                </p>
          
