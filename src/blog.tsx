@@ -11,7 +11,7 @@ const Blog: React.FC = () => {
           <img
             src="/logo.png"
             alt="Prismha Logo"
-            className="h-12 object-contain"
+            className="h-10 object-contain"
           />
           <span className="text-xl font-semibold tracking-tight">
             

@@ -97,7 +97,7 @@ const SaberMas: React.FC = () => {
 
       {/* Calendario */}
       <main className="flex-grow flex justify-center items-center w-full max-w-4xl px-6 py-10">
-        <div className="w-full h-[80vh] flex justify-center items-center">
+        <div className="w-full h-[90vh] flex justify-center items-center">
           <Cal
             namespace="30min"
             calLink="prismha-c34zuk/30min"
