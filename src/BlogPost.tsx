@@ -10,7 +10,7 @@ const BlogPost: React.FC = () => {
       <img
         src="/logo.png"
         alt="Prismha Logo"
-        className="h-12 object-contain"
+        className="h-10 object-contain"
         style={{ transform: "scale(1.5)" }}
       />
 

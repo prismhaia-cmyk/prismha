@@ -9,7 +9,7 @@ const BlogPost2 = () => {
         <img
           src="/logo.png"
           alt="Prismha Logo"
-          className="h-12 object-contain"
+          className="h-10 object-contain"
           style={{ transform: "scale(1.5)" }}
         />
         <nav className="flex items-center gap-6">
