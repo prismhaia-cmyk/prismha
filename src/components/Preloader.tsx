@@ -93,10 +93,10 @@ const Preloader = () => {
 
                     {/* Stage 2: PRISMHA Text - Apple Style */}
                     {stage === 1 && (
-                        <div className="flex flex-col items-center justify-center">
+                        <div className="flex flex-col items-center justify-center px-4">
                             {/* PRISMHA Text - Apple Style */}
                             <h1
-                                className="text-8xl md:text-9xl font-thin tracking-[0.25em]"
+                                className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-thin tracking-[0.15em] sm:tracking-[0.2em] md:tracking-[0.25em]"
                                 style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif' }}
                             >
                                 {["P", "R", "I", "S", "M", "H", "A"].map((letter, i) => (
@@ -124,9 +124,9 @@ const Preloader = () => {
 
                             {/* Elegant underline */}
                             <motion.div
-                                className="mt-6 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent"
+                                className="mt-4 sm:mt-6 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent w-[200px] sm:w-[300px] md:w-[400px]"
                                 initial={{ width: 0, opacity: 0 }}
-                                animate={{ width: "400px", opacity: 1 }}
+                                animate={{ width: "100%", opacity: 1 }}
                                 transition={{ delay: 0.6, duration: 0.8, ease: "easeOut" }}
                             />
                         </div>
