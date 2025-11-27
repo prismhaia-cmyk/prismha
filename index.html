@@ -1,35 +1,45 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- 🏆 Título SEO -->
-    <title>Automatiza tu empresa con IA | Prismha - Agencia de Inteligencia Artificial y Automatización</title>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- 💬 Descripción optimizada -->
-    <meta name="description" content="Impulsa la productividad de tu empresa con Prismha, la agencia líder en inteligencia artificial y automatización de procesos. Creamos soluciones inteligentes que reducen costes y optimizan tareas con IA y tecnología avanzada." />
+  <!-- 📱 Mobile Optimization -->
+  <meta name="theme-color" content="#0066FF" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="apple-touch-icon" href="https://www.prismha.com/logo-google.png" />
 
-    <!-- 📌 Canonical -->
-    <link rel="canonical" href="https://prismha.com/" />
+  <!-- 🏆 Título SEO -->
+  <title>Automatiza tu empresa con IA | Prismha - Agencia de Inteligencia Artificial y Automatización</title>
 
-    <!-- 🌐 Open Graph -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://prismha.com/" />
-    <meta property="og:site_name" content="Prismha" />
-    <meta property="og:title" content="Automatiza tu empresa con IA | Prismha" />
-    <meta property="og:description" content="Agencia líder en inteligencia artificial y automatización de procesos empresariales. Transforma tu negocio con soluciones inteligentes y eficientes." />
-    <meta property="og:image" content="https://prismha.com/logo-google.png" />
-    <meta property="og:image:alt" content="Logo de Prismha - Agencia de IA y Automatización" />
+  <!-- 💬 Descripción optimizada -->
+  <meta name="description"
+    content="Impulsa la productividad de tu empresa con Prismha, la agencia líder en inteligencia artificial y automatización de procesos. Creamos soluciones inteligentes que reducen costes y optimizan tareas con IA y tecnología avanzada." />
 
-    <!-- 🐦 Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Automatiza tu empresa con IA | Prismha" />
-    <meta name="twitter:description" content="Soluciones de inteligencia artificial y automatización para empresas que quieren crecer, reducir costes y mejorar su eficiencia." />
-    <meta name="twitter:image" content="https://prismha.com/logo-google.png" />
+  <!-- 📌 Canonical -->
+  <link rel="canonical" href="https://prismha.com/" />
 
-    <!-- 🧠 Datos estructurados Schema.org -->
-    <script type="application/ld+json">
+  <!-- 🌐 Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://prismha.com/" />
+  <meta property="og:site_name" content="Prismha" />
+  <meta property="og:title" content="Automatiza tu empresa con IA | Prismha" />
+  <meta property="og:description"
+    content="Agencia líder en inteligencia artificial y automatización de procesos empresariales. Transforma tu negocio con soluciones inteligentes y eficientes." />
+  <meta property="og:image" content="https://prismha.com/logo-google.png" />
+  <meta property="og:image:alt" content="Logo de Prismha - Agencia de IA y Automatización" />
+
+  <!-- 🐦 Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Automatiza tu empresa con IA | Prismha" />
+  <meta name="twitter:description"
+    content="Soluciones de inteligencia artificial y automatización para empresas que quieren crecer, reducir costes y mejorar su eficiencia." />
+  <meta name="twitter:image" content="https://prismha.com/logo-google.png" />
+
+  <!-- 🧠 Datos estructurados Schema.org -->
+  <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@graph": [
@@ -43,7 +53,14 @@
             "https://www.linkedin.com/company/prismha",
             "https://www.instagram.com/prismha"
           ],
-          "description": "Agencia de inteligencia artificial especializada en automatización de procesos, desarrollo de chatbots y soluciones inteligentes para empresas."
+          "description": "Agencia de inteligencia artificial especializada en automatización de procesos, desarrollo de chatbots y soluciones inteligentes para empresas.",
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "reviewCount": "4",
+            "bestRating": "5",
+            "worstRating": "1"
+          }
         },
         {
           "@type": "LocalBusiness",
@@ -51,8 +68,8 @@
           "name": "Prismha",
           "image": "https://prismha.com/logo-google.png",
           "url": "https://prismha.com",
-          "telephone": "+34 600 000 000",
-          "priceRange": "$$",
+          "email": "contacto@prismha.com",
+          "priceRange": "€€",
           "address": {
             "@type": "PostalAddress",
             "streetAddress": "Collado Villalba",
@@ -66,7 +83,15 @@
             "latitude": 40.6354,
             "longitude": -4.0043
           },
-          "areaServed": "España",
+          "areaServed": {
+            "@type": "GeoCircle",
+            "geoMidpoint": {
+              "@type": "GeoCoordinates",
+              "latitude": 40.4168,
+              "longitude": -3.7038
+            },
+            "geoRadius": "500000"
+          },
           "openingHours": "Mo-Fr 09:00-18:00",
           "sameAs": [
             "https://www.linkedin.com/company/prismha",
@@ -85,26 +110,111 @@
             "query-input": "required name=search_term_string"
           },
           "inLanguage": "es"
+        },
+        {
+          "@type": "Service",
+          "@id": "https://prismha.com#service-chatbots",
+          "serviceType": "Desarrollo de Chatbots con IA",
+          "provider": { "@id": "https://prismha.com#organization" },
+          "areaServed": "ES",
+          "description": "Chatbots inteligentes que automatizan la atención al cliente 24/7, mejoran la experiencia del usuario y aumentan las conversiones.",
+          "offers": {
+            "@type": "Offer",
+            "priceCurrency": "EUR",
+            "price": "750",
+            "priceSpecification": {
+              "@type": "PriceSpecification",
+              "priceCurrency": "EUR",
+              "price": "750",
+              "minPrice": "750",
+              "maxPrice": "1450"
+            }
+          }
+        },
+        {
+          "@type": "Service",
+          "@id": "https://prismha.com#service-automation",
+          "serviceType": "Automatización de Procesos Empresariales",
+          "provider": { "@id": "https://prismha.com#organization" },
+          "areaServed": "ES",
+          "description": "Automatización inteligente de tareas repetitivas, integración de sistemas y optimización de flujos de trabajo con IA.",
+          "offers": {
+            "@type": "Offer",
+            "priceCurrency": "EUR",
+            "price": "890"
+          }
+        },
+        {
+          "@type": "Service",
+          "@id": "https://prismha.com#service-analytics",
+          "serviceType": "Análisis de Datos con IA",
+          "provider": { "@id": "https://prismha.com#organization" },
+          "areaServed": "ES",
+          "description": "Análisis predictivo, dashboards inteligentes y toma de decisiones basada en datos con machine learning.",
+          "offers": {
+            "@type": "Offer",
+            "priceCurrency": "EUR",
+            "price": "1200"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://prismha.com#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "¿Cuánto tiempo tarda en implementarse una solución de IA?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "El tiempo de implementación varía según la complejidad del proyecto. Un chatbot básico puede estar listo en 3-4 semanas, mientras que proyectos de automatización más complejos pueden tomar 4-6 semanas. Trabajamos con metodologías ágiles para entregar valor rápidamente."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "¿Cuál es el ROI típico de una solución de automatización?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Nuestros clientes experimentan un ROI promedio del 618% en el primer año. La mayoría recupera su inversión en 2-4 semanas gracias al ahorro en tiempo (460+ horas/mes) y aumento de ingresos (€49K/mes promedio)."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "¿Qué incluye el servicio de automatización?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Incluye análisis inicial, diseño de la solución, desarrollo e implementación, integración con sistemas existentes, capacitación del equipo y soporte continuo. También ofrecemos consultoría gratuita de 30 minutos para evaluar tu caso."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "¿Necesito conocimientos técnicos para usar las soluciones?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. Diseñamos todas nuestras soluciones para que sean intuitivas y fáciles de usar. Incluimos capacitación completa para tu equipo y documentación detallada. El soporte técnico está siempre disponible."
+              }
+            }
+          ]
         }
       ]
     }
     </script>
 
-    <!-- 🖼️ Favicon -->
-    <link rel="icon" type="image/png" href="https://www.prismha.com/logo-google.png" />
+  <!-- 🖼️ Favicon -->
+  <link rel="icon" type="image/png" href="https://www.prismha.com/logo-google.png" />
 
-  </head>
+</head>
 
 
-  <body>
-    <!-- ✅ Contenedor principal de tu app React -->
-    <div id="root"></div>
-    <script type="module" src="/src/index.tsx"></script>
+<body>
+  <!-- ✅ Contenedor principal de tu app React -->
+  <div id="root"></div>
+  <script type="module" src="/src/index.tsx"></script>
 
-    
 
-    <!-- 🎙️ Chat IA integrado -->
-    <elevenlabs-convai agent-id="agent_8901k3xz2rzsf1fb2h83pjwft2m4"></elevenlabs-convai>
-    <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
-  </body>
+
+  <!-- 🎙️ Chat IA integrado -->
+  <elevenlabs-convai agent-id="agent_8901k3xz2rzsf1fb2h83pjwft2m4"></elevenlabs-convai>
+  <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+</body>
+
 </html>

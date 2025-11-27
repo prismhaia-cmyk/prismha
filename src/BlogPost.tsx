@@ -1,361 +1,285 @@
-import React from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { TrendingUp, Target, Zap, Shield, BarChart3, CheckCircle2 } from "lucide-react";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import SEO from "./components/SEO";
+import ProgressBar from "./components/blog/ProgressBar";
+import AnimatedStat from "./components/blog/AnimatedStat";
+import CategoryBadge from "./components/blog/CategoryBadge";
+import ReadingTime from "./components/blog/ReadingTime";
+import InteractiveQuote from "./components/blog/InteractiveQuote";
 
-const BlogPost: React.FC = () => {
+const BlogPost = () => {
   return (
-  <div className="relative bg-black min-h-screen w-full overflow-hidden flex flex-col items-center">
-    {/* Encabezado con logo y botones */}
-    <header className="w-full flex justify-between items-center px-10 py-6 max-w-6xl mx-auto">
-      {/* Logo */}
-      <img
-        src="/logo.png"
-        alt="Prismha Logo"
-        className="h-10 object-contain"
-        style={{ transform: "scale(1.5)" }}
+    <div className="relative min-h-screen bg-black text-white selection:bg-primary/30 selection:text-white">
+      <SEO
+        title="Automatización Empresarial en 2025"
+        description="Panorama, impacto y decisiones que importan en la automatización empresarial."
+        url="https://www.prismha.com/blogpost"
       />
+      <ProgressBar />
+      <Header />
 
-      {/* Botones de navegación */}
-      <nav className="flex items-center gap-6">
-        <Link
-          to="/"
-          className="text-white/80 hover:text-white transition-all duration-300 text-sm md:text-base font-normal tracking-tight"
-          style={{
-            fontFamily:
-              '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
-          }}
-        >
-          Home
-        </Link>
+      <div className="relative min-h-screen w-full flex flex-col items-center px-6 py-24">
+        <article className="max-w-4xl mx-auto w-full">
+          {/* Header */}
+          <header className="mb-16 text-center">
+            <div className="flex items-center justify-center gap-3 mb-6">
+              <CategoryBadge category="Tendencias" variant="primary" />
+              <ReadingTime minutes={5} />
+            </div>
 
-        <Link
-          to="/contacto"
-          className="text-white/80 hover:text-white transition-all duration-300 text-sm md:text-base font-normal tracking-tight"
-          style={{
-            fontFamily:
-              '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
-          }}
-        >
-          Contacto
-        </Link>
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-4xl md:text-6xl font-semibold tracking-tight mb-6 bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent"
+            >
+              Automatización Empresarial en 2025: panorama, impacto y decisiones que importan
+            </motion.h1>
 
-        <Link
-          to="/politica-privacidad"
-          className="text-white/80 hover:text-white transition-all duration-300 text-sm md:text-base font-normal tracking-tight"
-          style={{
-            fontFamily:
-              '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
-          }}
-        >
-          Política de Privacidad
-        </Link>
-      </nav>
-    </header>
-      <article className="max-w-4xl mx-auto">
-        {/* Título */}
-        <header className="mb-12">
-          <h1
-            className="text-4xl md:text-5xl font-semibold tracking-tight text-center mb-4"
-            style={{ color: "#19A1FF" }}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="text-white/70 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed"
+            >
+              Qué está ocurriendo en el mundo de las automatizaciones, cómo están tomando decisiones
+              las empresas y qué factores separan a quienes obtienen retorno real de quienes solo hacen pruebas.
+            </motion.p>
+          </header>
+
+          {/* Stats Section */}
+          <section className="mb-16">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 p-8 bg-gradient-to-r from-primary/10 to-blue-500/10 rounded-2xl border border-white/10">
+              <AnimatedStat value={30} suffix="%" label="Reducción de costes" />
+              <AnimatedStat value={2} suffix="x" label="Velocidad de procesos" />
+              <AnimatedStat value={24} suffix="/7" label="Disponibilidad" />
+              <AnimatedStat value={85} suffix="%" label="Satisfacción" />
+            </div>
+          </section>
+
+          {/* Executive Summary */}
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="bg-surface border border-white/10 rounded-2xl p-8 mb-12 relative overflow-hidden"
           >
-            Automatización Empresarial en 2025: panorama, impacto y decisiones que importan
-          </h1>
-          <p className="text-center text-white/70 text-lg">
-            Qué está ocurriendo en el mundo de las automatizaciones, cómo están tomando decisiones
-            las empresas y qué factores separan a quienes obtienen retorno real de quienes solo hacen pruebas.
-          </p>
-        </header>
-
-        {/* CINTILLO / RESUMEN EJECUTIVO */}
-        <section className="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8 mb-10">
-          <h2 className="text-2xl font-semibold mb-3" style={{ color: "#19A1FF" }}>
-            Resumen ejecutivo
-          </h2>
-          <p className="text-white/80 leading-relaxed">
-            La automatización empresarial ha pasado de ser una promesa a convertirse en una capa
-            imprescindible de la operación. Las compañías que mejor capitalizan su potencial no son
-            necesariamente las que despliegan más herramientas, sino las que diseñan **criterios de decisión**,
-            **miden impacto** y **alinean automatización con objetivos de negocio**. El foco no es “qué conectar”,
-            sino **qué resultado mantener en el tiempo**.
-          </p>
-        </section>
-
-        {/* CONTENIDO PRINCIPAL */}
-        <div className="space-y-14 text-white/90 leading-relaxed">
-
-          {/* 1. PANORAMA */}
-          <section>
-            <h3 className="text-2xl font-semibold mb-3" style={{ color: "#19A1FF" }}>
-              1) Panorama 2025: de automatizar tareas a orquestar decisiones
-            </h3>
-            <p>
-              La conversación ha evolucionado. Las automatizaciones ya no se limitan a mover datos entre
-              sistemas: hoy **orquestan eventos, priorizan flujos** y se integran con modelos de decisión.
-              Las áreas más activas son Operaciones, Atención al Cliente, Ventas y Finanzas; todas con un punto
-              común: **reducción de fricción interna** y **aumento de velocidad** sin sacrificar control.
-            </p>
-            <p className="mt-4">
-              Tres rasgos de madurez que vemos en las organizaciones que avanzan:
-            </p>
-            <ul className="list-disc list-inside text-white/80 mt-2">
-              <li>Automatización como **producto interno**: versión, propietario y roadmap.</li>
-              <li>**Observabilidad**: lo que no se monitoriza, no existe (tiempos, costes, errores).</li>
-              <li>**Gobernanza ligera**: reglas simples para priorizar qué sí y qué no automatizar.</li>
-            </ul>
-          </section>
-
-          {/* 2. IMPACTO */}
-          <section>
-            <h3 className="text-2xl font-semibold mb-3" style={{ color: "#19A1FF" }}>
-              2) Impacto real: dónde se ve el retorno
-            </h3>
-            <p>
-              Las palancas de retorno más consistentes son **tiempo**, **calidad** y **previsibilidad**.
-              Reducir tiempos de ciclo desbloquea ventas y entrega; mejorar la calidad reduce retrabajo;
-              la previsibilidad estabiliza la operación y permite escalar.
-            </p>
-            <div className="grid md:grid-cols-2 gap-4 mt-4">
-              <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-                <h4 className="font-semibold mb-2">Indicadores operativos</h4>
-                <ul className="list-disc list-inside text-white/80">
-                  <li>Tiempo de ciclo por proceso.</li>
-                  <li>Tasa de reintentos/errores.</li>
-                  <li>Tiempo medio de resolución de casos.</li>
-                </ul>
+            <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl" />
+            <div className="relative z-10">
+              <div className="flex items-center gap-2 mb-4">
+                <Target className="w-6 h-6 text-primary" />
+                <h2 className="text-2xl font-semibold text-primary">Resumen ejecutivo</h2>
               </div>
-              <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-                <h4 className="font-semibold mb-2">Indicadores de negocio</h4>
-                <ul className="list-disc list-inside text-white/80">
-                  <li>Pedidos/ingresos desbloqueados por reducción de fricción.</li>
-                  <li>Ahorro en horas-hombre equivalentes.</li>
-                  <li>CSAT/NPS vinculado a respuestas más rápidas y consistentes.</li>
-                </ul>
-              </div>
+              <p className="text-white/80 leading-relaxed">
+                La automatización empresarial ha pasado de ser una promesa a convertirse en una capa
+                imprescindible de la operación. Las compañías que mejor capitalizan su potencial no son
+                necesariamente las que despliegan más herramientas, sino las que diseñan <strong className="text-white">criterios de decisión</strong>,
+                <strong className="text-white"> miden impacto</strong> y <strong className="text-white">alinean automatización con objetivos de negocio</strong>.
+              </p>
             </div>
-          </section>
+          </motion.section>
 
-          {/* 3. CASOS POR ÁREA (alto nivel) */}
-          <section>
-            <h3 className="text-2xl font-semibold mb-3" style={{ color: "#19A1FF" }}>
-              3) Casos por área (sin entrar en el “cómo”)
-            </h3>
-            <div className="space-y-6">
-              <div className="bg-white/5 border border-white/10 rounded-xl p-5">
-                <h4 className="font-semibold mb-2">Atención al cliente</h4>
-                <p className="text-white/80">
-                  Enrutado inteligente de solicitudes, respuestas consistentes, cierre automático de
-                  tickets cuando se cumplan condiciones de negocio, y reportes de demanda en tiempo real.
-                </p>
+          {/* Main Content */}
+          <div className="space-y-16 text-white/90 leading-relaxed">
+
+            {/* Section 1 */}
+            <motion.section
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center">
+                  <TrendingUp className="w-6 h-6 text-primary" />
+                </div>
+                <h3 className="text-3xl font-semibold text-white">
+                  Panorama 2025: de automatizar tareas a orquestar decisiones
+                </h3>
               </div>
-              <div className="bg-white/5 border border-white/10 rounded-xl p-5">
-                <h4 className="font-semibold mb-2">Ventas</h4>
-                <p className="text-white/80">
-                  Calificación automatizada de oportunidades, recordatorios contextuales y
-                  actualización de estados sin intervención manual, con foco en **tiempo a propuesta**.
-                </p>
+
+              <p className="mb-4">
+                La conversación ha evolucionado. Las automatizaciones ya no se limitan a mover datos entre
+                sistemas: hoy <strong>orquestan eventos, priorizan flujos</strong> y se integran con modelos de decisión.
+              </p>
+
+              <div className="grid md:grid-cols-3 gap-4 mt-6">
+                {[
+                  { icon: CheckCircle2, title: "Producto interno", desc: "Versión, propietario y roadmap" },
+                  { icon: BarChart3, title: "Observabilidad", desc: "Monitorización de tiempos y costes" },
+                  { icon: Shield, title: "Gobernanza ligera", desc: "Reglas simples de priorización" }
+                ].map((item, i) => (
+                  <div key={i} className="p-5 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-colors">
+                    <item.icon className="w-8 h-8 text-primary mb-3" />
+                    <h4 className="font-semibold text-white mb-2">{item.title}</h4>
+                    <p className="text-white/60 text-sm">{item.desc}</p>
+                  </div>
+                ))}
               </div>
-              <div className="bg-white/5 border border-white/10 rounded-xl p-5">
-                <h4 className="font-semibold mb-2">Operaciones</h4>
-                <p className="text-white/80">
-                  Sincronización entre sistemas, validaciones automáticas, conciliaciones recurrentes y
-                  alertas tempranas ante desviaciones del flujo estándar.
-                </p>
+            </motion.section>
+
+            {/* Section 2 - Impact */}
+            <motion.section
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-12 h-12 rounded-xl bg-green-500/20 flex items-center justify-center">
+                  <Zap className="w-6 h-6 text-green-400" />
+                </div>
+                <h3 className="text-3xl font-semibold text-white">
+                  Impacto real: dónde se ve el retorno
+                </h3>
               </div>
-              <div className="bg-white/5 border border-white/10 rounded-xl p-5">
-                <h4 className="font-semibold mb-2">Finanzas</h4>
-                <p className="text-white/80">
-                  Preparación de reportes, validación de facturas y detección de incoherencias
-                  antes del cierre mensual.
-                </p>
+
+              <p className="mb-6">
+                Las palancas de retorno más consistentes son <strong>tiempo</strong>, <strong>calidad</strong> y <strong>previsibilidad</strong>.
+              </p>
+
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="bg-gradient-to-br from-blue-500/10 to-purple-500/10 border border-white/10 rounded-xl p-6">
+                  <h4 className="font-semibold mb-4 text-white flex items-center gap-2">
+                    <BarChart3 className="w-5 h-5 text-primary" />
+                    Indicadores operativos
+                  </h4>
+                  <ul className="space-y-3 text-white/70">
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                      <span>Tiempo de ciclo por proceso</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                      <span>Tasa de reintentos/errores</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                      <span>Tiempo medio de resolución</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="bg-gradient-to-br from-green-500/10 to-teal-500/10 border border-white/10 rounded-xl p-6">
+                  <h4 className="font-semibold mb-4 text-white flex items-center gap-2">
+                    <Target className="w-5 h-5 text-green-400" />
+                    Indicadores de negocio
+                  </h4>
+                  <ul className="space-y-3 text-white/70">
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                      <span>Pedidos desbloqueados por reducción de fricción</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                      <span>Ahorro en horas-hombre equivalentes</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                      <span>CSAT/NPS vinculado a respuestas rápidas</span>
+                    </li>
+                  </ul>
+                </div>
               </div>
-            </div>
-          </section>
+            </motion.section>
 
-          {/* 4. MODELO DE MADUREZ */}
-          <section>
-            <h3 className="text-2xl font-semibold mb-3" style={{ color: "#19A1FF" }}>
-              4) Modelo simple de madurez en automatización
-            </h3>
-            <ol className="list-decimal list-inside text-white/80 space-y-2">
-              <li><strong>Exploración</strong>: pruebas aisladas, sin métricas.</li>
-              <li><strong>Operación</strong>: primeras automatizaciones “dueñas” de un KPI.</li>
-              <li><strong>Orquestación</strong>: flujos conectados entre áreas, monitorizados.</li>
-              <li><strong>Producto interno</strong>: catálogo, versionado y gobierno ligero.</li>
-            </ol>
-            <p className="mt-4">
-              El salto crítico ocurre entre “Operación” y “Orquestación”: cuando la empresa deja
-              de automatizar tareas sueltas y empieza a **alinear flujos a objetivos comunes**.
-            </p>
-          </section>
+            {/* Interactive Quote */}
+            <InteractiveQuote author="CEO, Empresa Mediana">
+              El cambio no fue "magia técnica", sino alineación entre proceso y decisión. Ganamos +18% en tasa de cierre simplemente reduciendo el tiempo a propuesta.
+            </InteractiveQuote>
 
-          {/* 5. ARQUITECTURA DE DECISIÓN (alto nivel) */}
-          <section>
-            <h3 className="text-2xl font-semibold mb-3" style={{ color: "#19A1FF" }}>
-              5) Arquitectura de decisión (sin herramientas)
-            </h3>
-            <p>
-              Toda iniciativa sostenible de automatización combina cuatro capas:
-            </p>
-            <ul className="list-disc list-inside text-white/80 mt-2">
-              <li><strong>Eventos</strong>: qué dispara cada flujo.</li>
-              <li><strong>Reglas</strong>: condiciones de negocio claras y auditables.</li>
-              <li><strong>Acciones</strong>: efectos en sistemas y documentos.</li>
-              <li><strong>Observabilidad</strong>: métricas, logs, alertas y coste.</li>
-            </ul>
-            <p className="mt-4">
-              El diseño se vuelve robusto cuando los **eventos y reglas** están modelados de forma
-              explícita; así la empresa puede cambiar el comportamiento sin rehacer todo.
-            </p>
-          </section>
+            {/* Maturity Model - Visual Timeline */}
+            <motion.section
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <h3 className="text-3xl font-semibold text-white mb-8">
+                Modelo de madurez en automatización
+              </h3>
 
-          {/* 6. RIESGOS Y ANTÍDOTOS */}
-          <section>
-            <h3 className="text-2xl font-semibold mb-3" style={{ color: "#19A1FF" }}>
-              6) Riesgos frecuentes y cómo evitarlos (enfoque ejecutivo)
-            </h3>
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-white/5 border border-white/10 rounded-xl p-5">
-                <h4 className="font-semibold mb-2">Dependencia de personas clave</h4>
-                <p className="text-white/80">
-                  Antídoto: documentación mínima, propiedad de procesos y estándares de nombrado.
-                </p>
+              <div className="relative">
+                {/* Timeline Line */}
+                <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-blue-400 to-green-400" />
+
+                {/* Timeline Items */}
+                <div className="space-y-8">
+                  {[
+                    { level: "1", title: "Exploración", desc: "Pruebas aisladas, sin métricas", color: "from-red-500 to-orange-500" },
+                    { level: "2", title: "Operación", desc: "Primeras automatizaciones 'dueñas' de un KPI", color: "from-orange-500 to-yellow-500" },
+                    { level: "3", title: "Orquestación", desc: "Flujos conectados entre áreas, monitorizados", color: "from-yellow-500 to-green-500" },
+                    { level: "4", title: "Producto interno", desc: "Catálogo, versionado y gobierno ligero", color: "from-green-500 to-blue-500" }
+                  ].map((stage, i) => (
+                    <div key={i} className="relative pl-16">
+                      <div className={`absolute left-0 w-12 h-12 rounded-full bg-gradient-to-br ${stage.color} flex items-center justify-center font-bold text-white shadow-lg`}>
+                        {stage.level}
+                      </div>
+                      <div className="bg-white/5 border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-colors">
+                        <h4 className="text-xl font-semibold text-white mb-2">{stage.title}</h4>
+                        <p className="text-white/70">{stage.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
-              <div className="bg-white/5 border border-white/10 rounded-xl p-5">
-                <h4 className="font-semibold mb-2">Flujos invisibles</h4>
-                <p className="text-white/80">
-                  Antídoto: panel operativo con errores, reintentos, tiempos y coste por flujo.
-                </p>
-              </div>
-              <div className="bg-white/5 border border-white/10 rounded-xl p-5">
-                <h4 className="font-semibold mb-2">Automatizar lo equivocado</h4>
-                <p className="text-white/80">
-                  Antídoto: priorización por impacto (ahorro/ingresos) x esfuerzo (complejidad).
-                </p>
-              </div>
-              <div className="bg-white/5 border border-white/10 rounded-xl p-5">
-                <h4 className="font-semibold mb-2">Crecimiento de costes</h4>
-                <p className="text-white/80">
-                  Antídoto: límites, archivado de logs y revisión técnica trimestral.
-                </p>
-              </div>
-            </div>
-          </section>
 
-          {/* 7. MÉTRICAS QUE IMPORTAN */}
-          <section>
-            <h3 className="text-2xl font-semibold mb-3" style={{ color: "#19A1FF" }}>
-              7) Métricas que sí mueven la aguja
-            </h3>
-            <ul className="list-disc list-inside text-white/80 space-y-2">
-              <li><strong>Horas-ahorro/mes</strong> y equivalentes salariales.</li>
-              <li><strong>Pedidos o tickets acelerados</strong> por reducción de tiempos.</li>
-              <li><strong>% de casos automatizados</strong> sin intervención.</li>
-              <li><strong>Coste por 1.000 ejecuciones</strong> (unit economics del flujo).</li>
-              <li><strong>Tiempo a diagnóstico</strong> cuando algo falla.</li>
-            </ul>
-          </section>
+              <p className="mt-8 text-white/80 bg-primary/10 border border-primary/20 rounded-xl p-6">
+                <strong className="text-primary">Punto crítico:</strong> El salto entre "Operación" y "Orquestación" es donde la empresa deja de automatizar tareas sueltas y empieza a alinear flujos a objetivos comunes.
+              </p>
+            </motion.section>
 
-          {/* 8. HISTORIA BREVE (ESTILO CASO) */}
-          <section>
-            <h3 className="text-2xl font-semibold mb-3" style={{ color: "#19A1FF" }}>
-              8) Una historia breve: la empresa que ganó tiempo para vender
-            </h3>
-            <p>
-              Una compañía mediana sufría cuellos de botella en pre-venta: aprobaciones,
-              generación de documentos y actualizaciones en el CRM. Decidieron **automatizar el movimiento
-              de información y la verificación de condiciones**. Resultado a 90 días: +18% en tasa de cierre
-              por reducción del tiempo a propuesta; el cambio no fue “magia técnica”, sino **alineación entre
-              proceso y decisión**.
-            </p>
-          </section>
+            {/* Conclusion */}
+            <motion.section
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="bg-gradient-to-r from-primary/20 to-blue-500/20 rounded-2xl p-8 border border-white/10"
+            >
+              <h3 className="text-2xl font-semibold text-white mb-4">Conclusión</h3>
+              <p className="text-white/90 leading-relaxed">
+                La automatización es una <strong>competencia organizativa</strong>. Las empresas que ganan consistencia
+                combinan visión de negocio, criterios de priorización y observabilidad. El reto ya no es
+                empezar, sino <strong>sostener resultados</strong> mientras la operación crece.
+              </p>
+            </motion.section>
 
-          {/* 9. CONCLUSIÓN */}
-          <section>
-            <h3 className="text-2xl font-semibold mb-3" style={{ color: "#19A1FF" }}>
-              Conclusión
-            </h3>
-            <p>
-              La automatización es una **competencia organizativa**. Las empresas que ganan consistencia
-              combinan visión de negocio, criterios de priorización y observabilidad. El reto ya no es
-              empezar, sino **sostener resultados** mientras la operación crece.
-            </p>
-          </section>
+            {/* CTA */}
+            <motion.section
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="bg-surface border border-primary/30 rounded-2xl p-8 text-center"
+            >
+              <h4 className="text-2xl font-semibold mb-4 text-primary">
+                ¿Quieres identificar 3 automatizaciones de impacto en 10 días?
+              </h4>
+              <p className="text-white/80 mb-6 max-w-2xl mx-auto">
+                En Prismha trabajamos con un marco de priorización y métricas que aceleran decisiones y retornos.
+              </p>
+              <Link
+                to="/contacto"
+                className="inline-block bg-primary hover:bg-primary-hover text-white px-8 py-4 rounded-full font-medium text-lg transition-all hover:scale-105 shadow-lg shadow-primary/25"
+              >
+                Agendar consulta gratuita
+              </Link>
+            </motion.section>
+          </div>
 
-          {/* CTA SIMPLE */}
-          <section className="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8">
-            <h4 className="text-xl font-semibold mb-2" style={{ color: "#19A1FF" }}>
-              ¿Quieres identificar 3 automatizaciones de impacto en 10 días?
-            </h4>
-            <p className="text-white/80">
-              En Prismha trabajamos con un marco de priorización y métricas que aceleran decisiones y retornos.
-            </p>
-          </section>
-        </div>
+          {/* Back Button */}
+          <div className="text-center mt-16">
+            <Link
+              to="/blog"
+              className="inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 text-white px-8 py-3 rounded-full transition-all font-medium border border-white/10"
+            >
+              ← Volver al Blog
+            </Link>
+          </div>
+        </article>
+      </div>
 
-        {/* Volver */}
-        <div className="text-center mt-16">
-          <Link
-            to="/blog"
-            className="inline-block bg-[#19A1FF] hover:bg-[#1097ef] text-white px-6 py-3 rounded-full transition-all"
-          >
-            ← Volver al Blog
-          </Link>
-        </div>
-      </article>
-   {/* === PIE DE PÁGINA === */}
-         <footer className="w-full bg-black text-white py-10 border-t border-[#0099FF]/40 mt-20">
-           <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
-             
-             {/* Nombre y dirección */}
-             <div>
-               <h2 
-                 className="text-2xl font-semibold tracking-tight mb-2"
-                 style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif' }}
-               >
-                 Prismha
-               </h2>
-               <p 
-                 className="text-white/80 leading-relaxed text-sm"
-                 style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif' }}
-               >
-                 Mirador de Gredos 7<br />
-                 Madrid, España
-               </p>
-             </div>
-         
-             {/* Correo y política */}
-             <div className="text-sm space-y-2">
-               <p 
-                 className="text-white/80"
-                 style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif' }}
-               >
-                 Correo electrónico:{" "}
-                 <a 
-                   href="mailto:prismhaagencia@prismha.com" 
-                   className="text-[#0099FF] hover:underline"
-                 >
-                   prismhaagencia@prismha.com
-                 </a>
-               </p>
-         
-               {/* Enlace de Política de Privacidad */}
-               <Link 
-                 to="/politica-privacidad"
-                 className="text-white/80 hover:text-[#0099FF] transition-colors"
-                 style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif' }}
-               >
-                 Política de Privacidad
-               </Link>
-             </div>
-           </div>
-         
-           <div className="mt-8 text-center text-white/50 text-xs">
-             © {new Date().getFullYear()} Prismha. Todos los derechos reservados.
-           </div>
-         </footer>
-         
-         
-             </div>
-           );
-         };
+      <Footer />
+    </div>
+  );
+};
 
 export default BlogPost;

@@ -1,3 +1,27 @@
+# robots.txt para Prismha
+# Permitir todos los bots de búsqueda
+
 User-agent: *
 Allow: /
+
+# Bots específicos importantes
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+# Bloquear acceso a archivos innecesarios
+Disallow: /src/
+Disallow: /*.json$
+Disallow: /*.ts$
+Disallow: /*.tsx$
+
+# Sitemap
 Sitemap: https://prismha.com/sitemap.xml

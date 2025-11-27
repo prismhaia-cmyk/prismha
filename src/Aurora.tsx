@@ -18,6 +18,7 @@ uniform float uAmplitude;
 uniform vec3 uColorStops[3];
 uniform vec2 uResolution;
 uniform float uBlend;
+uniform vec2 uMouse;
 
 out vec4 fragColor;
 
@@ -95,9 +96,13 @@ void main() {
   vec3 rampColor;
   COLOR_RAMP(colors, uv.x, rampColor);
   
-  float height = snoise(vec2(uv.x * 2.0 + uTime * 0.1, uTime * 0.25)) * 0.5 * uAmplitude;
+  // Mouse interaction: distort based on distance to mouse
+  float dist = distance(uv, uMouse);
+  float mouseEffect = smoothstep(0.5, 0.0, dist) * 0.5;
+  
+  float height = snoise(vec2(uv.x * 2.0 + uTime * 0.1, uTime * 0.25 + mouseEffect)) * 0.5 * uAmplitude;
   height = exp(height);
-  height = (uv.y * 2.0 - height + 0.2);
+  height = (uv.y * 2.0 - height + 0.2 + mouseEffect * 0.2);
   float intensity = 0.6 * height;
   
   float midPoint = 0.20;
@@ -109,12 +114,14 @@ void main() {
 }
 `;
 
-export default function Aurora(props) {
+export default function Aurora(props: any) {
   const { colorStops = ['#5227FF', '#7cff67', '#5227FF'], amplitude = 1.0, blend = 0.5 } = props;
-  const propsRef = useRef(props);
+  const propsRef = useRef<any>(props);
   propsRef.current = props;
 
-  const ctnDom = useRef(null);
+  const ctnDom = useRef<HTMLDivElement>(null);
+  const mouseRef = useRef({ x: 0.5, y: 0.5 });
+  const targetMouseRef = useRef({ x: 0.5, y: 0.5 });
 
   useEffect(() => {
     const ctn = ctnDom.current;
@@ -131,7 +138,7 @@ export default function Aurora(props) {
     gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
     gl.canvas.style.backgroundColor = 'transparent';
 
-    let program;
+    let program: any;
 
     function resize() {
       if (!ctn) return;
@@ -144,12 +151,22 @@ export default function Aurora(props) {
     }
     window.addEventListener('resize', resize);
 
+    // Mouse interaction
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!ctn) return;
+      const rect = ctn.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width;
+      const y = 1.0 - (e.clientY - rect.top) / rect.height; // Flip Y for GL
+      targetMouseRef.current = { x, y };
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+
     const geometry = new Triangle(gl);
     if (geometry.attributes.uv) {
       delete geometry.attributes.uv;
     }
 
-    const colorStopsArray = colorStops.map(hex => {
+    const colorStopsArray = colorStops.map((hex: string) => {
       const c = new Color(hex);
       return [c.r, c.g, c.b];
     });
@@ -162,7 +179,8 @@ export default function Aurora(props) {
         uAmplitude: { value: amplitude },
         uColorStops: { value: colorStopsArray },
         uResolution: { value: [ctn.offsetWidth, ctn.offsetHeight] },
-        uBlend: { value: blend }
+        uBlend: { value: blend },
+        uMouse: { value: [0.5, 0.5] } // New uniform
       }
     });
 
@@ -170,14 +188,21 @@ export default function Aurora(props) {
     ctn.appendChild(gl.canvas);
 
     let animateId = 0;
-    const update = t => {
+    const update = (t: number) => {
       animateId = requestAnimationFrame(update);
       const { time = t * 0.01, speed = 1.0 } = propsRef.current;
+
+      // Smooth mouse interpolation
+      mouseRef.current.x += (targetMouseRef.current.x - mouseRef.current.x) * 0.05;
+      mouseRef.current.y += (targetMouseRef.current.y - mouseRef.current.y) * 0.05;
+
       program.uniforms.uTime.value = time * speed * 0.1;
       program.uniforms.uAmplitude.value = propsRef.current.amplitude ?? 1.0;
       program.uniforms.uBlend.value = propsRef.current.blend ?? blend;
+      program.uniforms.uMouse.value = [mouseRef.current.x, mouseRef.current.y];
+
       const stops = propsRef.current.colorStops ?? colorStops;
-      program.uniforms.uColorStops.value = stops.map(hex => {
+      program.uniforms.uColorStops.value = stops.map((hex: string) => {
         const c = new Color(hex);
         return [c.r, c.g, c.b];
       });
@@ -190,6 +215,7 @@ export default function Aurora(props) {
     return () => {
       cancelAnimationFrame(animateId);
       window.removeEventListener('resize', resize);
+      window.removeEventListener('mousemove', handleMouseMove);
       if (ctn && gl.canvas.parentNode === ctn) {
         ctn.removeChild(gl.canvas);
       }

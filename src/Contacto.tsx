@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { Mail, Phone, Clock, CheckCircle2, MessageCircle, Zap, Shield, TrendingUp } from "lucide-react";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import SEO from "./components/SEO";
 
 const WEBHOOK_URL =
-  "https://prismha.app.n8n.cloud/webhook/62c4994c-a5e9-47c7-99e5-a25d2cb0b8a2"; // 🔹 tu webhook
+  "https://prismha.app.n8n.cloud/webhook/62c4994c-a5e9-47c7-99e5-a25d2cb0b8a2";
 
 const Contacto = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
-
   const [formData, setFormData] = useState({
     nombre: "",
     email: "",
@@ -58,234 +60,242 @@ const Contacto = () => {
   };
 
   return (
-    <div className="relative bg-black min-h-screen w-full overflow-hidden flex flex-col items-center">
-      {/* === ENCABEZADO RESPONSIVE === */}
-      <header className="w-full bg-black/80 backdrop-blur-md fixed top-0 left-0 z-50 border-b border-white/10">
-        <div className="max-w-6xl mx-auto flex justify-between items-center px-6 sm:px-10 py-4 sm:py-6">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-3">
-            <img
-              src="/logo.png"
-              alt="Prismha Logo"
-              className="h-10 sm:h-12 object-contain transition-transform hover:scale-105"
-            />
-          </Link>
+    <div className="relative min-h-screen bg-black text-white selection:bg-primary/30 selection:text-white">
+      <SEO
+        title="Contacto - Solicita tu Auditoría Gratuita"
+        description="Contacta con Prismha para automatizar tu empresa con IA. Respuesta en menos de 24h. Auditoría gratuita incluida. Descubre cómo aumentar tus ingresos y reducir costes."
+        keywords="contacto Prismha, auditoría gratuita IA, consultoría automatización, contactar agencia IA España"
+        url="https://www.prismha.com/contacto"
+        image="https://prismha.com/logo-google.png"
+      />
+      <Header />
 
-          {/* Botón Hamburguesa (solo móvil) */}
-          <button
-            className="text-white sm:hidden focus:outline-none"
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Abrir menú"
-          >
-            {menuOpen ? (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            ) : (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-            )}
-          </button>
-
-          {/* Navegación */}
-          <nav
-            className={`${
-              menuOpen ? "flex" : "hidden"
-            } sm:flex flex-col sm:flex-row absolute sm:static top-16 left-0 w-full sm:w-auto bg-black sm:bg-transparent text-center sm:text-left space-y-4 sm:space-y-0 sm:space-x-6 px-6 sm:px-0 py-6 sm:py-0 transition-all duration-300`}
-          >
-            <Link
-              to="/"
-              className="text-white/80 hover:text-white transition-all duration-300 text-base font-normal tracking-tight"
-            >
-              Home
-            </Link>
-
-            <Link
-              to="/politica-privacidad"
-              className="text-white/80 hover:text-white transition-all duration-300 text-base font-normal tracking-tight"
-            >
-              Política de Privacidad
-            </Link>
-          </nav>
-        </div>
-      </header>
-      {/* ===== FORMULARIO ===== */}
-      <main className="flex-grow flex flex-col items-center justify-center px-6 py-12 pt-32">
-
-  <div className="w-full max-w-5xl backdrop-blur-xl bg-black/60 p-12 rounded-3xl border border-[#0099FF]/40 shadow-2xl mx-auto">
-    <h1
-      className="text-white text-3xl md:text-4xl font-light text-center mb-2"
-      style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif' }}
-    >
-      Contáctanos
-    </h1>
-    <p
-      className="text-white/60 text-center mb-10"
-      style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif' }}
-    >
-      En menos de 24 horas tendrás una respuesta.
-    </p>
-
-    {/* Formulario en dos columnas */}
-    <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-8">
-      {/* Nombre */}
-      <div>
-        <label className="block text-white/80 mb-2 text-sm">Nombre *</label>
-        <input
-          type="text"
-          name="nombre"
-          placeholder="Nombre y apellidos"
-          value={formData.nombre}
-          onChange={handleChange}
-          required
-          className="w-full px-5 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-[#0099FF]"
-        />
-      </div>
-
-      {/* Email */}
-      <div>
-        <label className="block text-white/80 mb-2 text-sm">Email *</label>
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-          className="w-full px-5 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-[#0099FF]"
-        />
-      </div>
-
-      {/* Teléfono */}
-      <div>
-        <label className="block text-white/80 mb-2 text-sm">Teléfono *</label>
-        <input
-          type="tel"
-          name="telefono"
-          placeholder="📞 Ingresa tu número de teléfono"
-          value={formData.telefono}
-          onChange={handleChange}
-          required
-          className="w-full px-5 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-[#0099FF]"
-        />
-      </div>
-
-      {/* Empresa */}
-      <div>
-        <label className="block text-white/80 mb-2 text-sm">Nombre de la empresa *</label>
-        <input
-          type="text"
-          name="empresa"
-          placeholder="Nombre de la empresa"
-          value={formData.empresa}
-          onChange={handleChange}
-          required
-          className="w-full px-5 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-[#0099FF]"
-        />
-      </div>
-
-      {/* Mensaje */}
-      <div className="md:col-span-2">
-        <label className="block text-white/80 mb-2 text-sm">¿Cómo podemos ayudarte? *</label>
-        <textarea
-          name="mensaje"
-          rows={5}
-          placeholder="Cuéntanos cómo podemos impulsar tu empresa"
-          value={formData.mensaje}
-          onChange={handleChange}
-          required
-          className="w-full px-5 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-[#0099FF]"
-        />
-      </div>
-
-      {/* Botón */}
-      <div className="md:col-span-2 flex justify-center">
-        <button
-          type="submit"
-          disabled={enviando}
-          className="w-full md:w-1/2 bg-[#0099FF] text-white py-3 rounded-full font-medium transition-all duration-300 hover:bg-[#00B3FF] disabled:opacity-50"
-          style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif' }}
+      <div className="relative min-h-screen w-full px-6 py-24">
+        {/* Hero Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="max-w-4xl mx-auto text-center mb-16"
         >
-          {enviando ? "Enviando..." : "Enviar mensaje"}
-        </button>
+          <h1 className="text-4xl md:text-6xl font-light mb-6">
+            Hablemos de tu <span className="text-primary">proyecto</span>
+          </h1>
+          <p className="text-white/70 text-lg md:text-xl max-w-2xl mx-auto">
+            Cuéntanos tu reto y te mostraremos cómo la automatización puede transformar tu negocio
+          </p>
+        </motion.div>
+
+        {/* Beneficios */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="max-w-6xl mx-auto mb-16"
+        >
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="backdrop-blur-md bg-white/5 rounded-2xl p-6 border border-white/10 text-center">
+              <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-4">
+                <Clock className="w-6 h-6 text-primary" />
+              </div>
+              <h3 className="font-semibold text-white mb-2">Respuesta en 24h</h3>
+              <p className="text-white/60 text-sm">Nuestro equipo te responderá en menos de un día hábil</p>
+            </div>
+
+            <div className="backdrop-blur-md bg-white/5 rounded-2xl p-6 border border-white/10 text-center">
+              <div className="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-4">
+                <Shield className="w-6 h-6 text-green-400" />
+              </div>
+              <h3 className="font-semibold text-white mb-2">Auditoría gratuita</h3>
+              <p className="text-white/60 text-sm">Análisis inicial de tus procesos sin coste</p>
+            </div>
+
+            <div className="backdrop-blur-md bg-white/5 rounded-2xl p-6 border border-white/10 text-center">
+              <div className="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center mx-auto mb-4">
+                <Zap className="w-6 h-6 text-blue-400" />
+              </div>
+              <h3 className="font-semibold text-white mb-2">Sin compromiso</h3>
+              <p className="text-white/60 text-sm">Explora las posibilidades sin obligación</p>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Contenido principal: Formulario + Sidebar */}
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-3 gap-8">
+          {/* Formulario */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2 }}
+            className="lg:col-span-2"
+          >
+            <div className="backdrop-blur-xl bg-white/5 p-8 md:p-12 rounded-3xl border border-white/10 shadow-2xl">
+              <h2 className="text-2xl md:text-3xl font-light mb-8">Envíanos un mensaje</h2>
+
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid md:grid-cols-2 gap-6">
+                  {/* Nombre */}
+                  <div>
+                    <label className="block text-white/80 mb-2 text-sm font-medium">Nombre *</label>
+                    <input
+                      type="text"
+                      name="nombre"
+                      placeholder="Nombre y apellidos"
+                      value={formData.nombre}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-5 py-4 rounded-xl bg-black/40 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+                    />
+                  </div>
+
+                  {/* Email */}
+                  <div>
+                    <label className="block text-white/80 mb-2 text-sm font-medium">Email *</label>
+                    <input
+                      type="email"
+                      name="email"
+                      placeholder="tu@email.com"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-5 py-4 rounded-xl bg-black/40 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+                    />
+                  </div>
+
+                  {/* Teléfono - OPCIONAL */}
+                  <div>
+                    <label className="block text-white/80 mb-2 text-sm font-medium">
+                      Teléfono <span className="text-white/40 text-xs">(opcional)</span>
+                    </label>
+                    <input
+                      type="tel"
+                      name="telefono"
+                      placeholder="+34 600 000 000"
+                      value={formData.telefono}
+                      onChange={handleChange}
+                      className="w-full px-5 py-4 rounded-xl bg-black/40 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+                    />
+                  </div>
+
+                  {/* Empresa - OPCIONAL */}
+                  <div>
+                    <label className="block text-white/80 mb-2 text-sm font-medium">
+                      Empresa <span className="text-white/40 text-xs">(opcional)</span>
+                    </label>
+                    <input
+                      type="text"
+                      name="empresa"
+                      placeholder="Nombre de tu empresa"
+                      value={formData.empresa}
+                      onChange={handleChange}
+                      className="w-full px-5 py-4 rounded-xl bg-black/40 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+                    />
+                  </div>
+                </div>
+
+                {/* Mensaje */}
+                <div>
+                  <label className="block text-white/80 mb-2 text-sm font-medium">¿Cómo podemos ayudarte? *</label>
+                  <textarea
+                    name="mensaje"
+                    rows={5}
+                    placeholder="Cuéntanos sobre tu proyecto o necesidades..."
+                    value={formData.mensaje}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-5 py-4 rounded-xl bg-black/40 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all resize-none"
+                  />
+                </div>
+
+                {/* Botón */}
+                <div className="flex justify-center mt-6">
+                  <button
+                    type="submit"
+                    disabled={enviando}
+                    className="w-full md:w-auto px-12 py-4 bg-primary text-white rounded-full font-medium text-lg transition-all duration-300 hover:bg-primary-hover hover:shadow-lg hover:shadow-primary/25 disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-1"
+                  >
+                    {enviando ? "Enviando..." : "Enviar mensaje"}
+                  </button>
+                </div>
+
+                {/* Mensaje de confirmación */}
+                {enviado && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex items-center gap-2 p-4 bg-green-500/10 border border-green-500/20 rounded-xl text-green-400 text-sm"
+                  >
+                    <CheckCircle2 className="w-5 h-5" />
+                    <span>Mensaje enviado correctamente. Nos pondremos en contacto contigo pronto.</span>
+                  </motion.div>
+                )}
+              </form>
+            </div>
+          </motion.div>
+
+          {/* Sidebar */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.3 }}
+            className="space-y-6"
+          >
+            {/* Contacto alternativo */}
+            <div className="backdrop-blur-md bg-white/5 rounded-2xl p-6 border border-white/10">
+              <h3 className="font-semibold text-white mb-4">Otras formas de contacto</h3>
+              <div className="space-y-4">
+                <a href="mailto:prismhaagencia@prismha.com" className="flex items-center gap-3 text-white/70 hover:text-primary transition-colors">
+                  <Mail className="w-5 h-5" />
+                  <span>prismhaagencia@prismha.com</span>
+                </a>
+                <a href="tel:+34669369800" className="flex items-center gap-3 text-white/70 hover:text-primary transition-colors">
+                  <Phone className="w-5 h-5" />
+                  <span>+34 669 369 800</span>
+                </a>
+                <a href="https://wa.me/34669369800" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-white/70 hover:text-primary transition-colors">
+                  <MessageCircle className="w-5 h-5" />
+                  <span>WhatsApp</span>
+                </a>
+              </div>
+            </div>
+
+            {/* FAQs */}
+            <div className="backdrop-blur-md bg-white/5 rounded-2xl p-6 border border-white/10">
+              <h3 className="font-semibold text-white mb-4">Preguntas frecuentes</h3>
+              <div className="space-y-4">
+                <div>
+                  <h4 className="text-white/90 font-medium mb-1 text-sm">¿Cuánto cuesta?</h4>
+                  <p className="text-white/60 text-xs">Depende del proyecto. La auditoría inicial es gratuita.</p>
+                </div>
+                <div>
+                  <h4 className="text-white/90 font-medium mb-1 text-sm">¿Cuánto tiempo toma?</h4>
+                  <p className="text-white/60 text-xs">Proyectos simples: 1-2 semanas. Complejos: 4-8 semanas.</p>
+                </div>
+                <div>
+                  <h4 className="text-white/90 font-medium mb-1 text-sm">¿Qué necesito preparar?</h4>
+                  <p className="text-white/60 text-xs">Solo una descripción de tus procesos actuales.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Testimonial */}
+            <div className="backdrop-blur-md bg-gradient-to-br from-primary/10 to-blue-500/10 rounded-2xl p-6 border border-primary/20">
+              <div className="flex items-start gap-3 mb-3">
+                <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+                  <TrendingUp className="w-5 h-5 text-primary" />
+                </div>
+                <div>
+                  <p className="text-white/90 text-sm italic mb-2">
+                    "En 2 semanas automatizamos nuestro proceso de ventas. Ahorramos 20 horas semanales."
+                  </p>
+                  <p className="text-white/60 text-xs">— CEO, Empresa Retail</p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
       </div>
 
-      {/* Mensaje de confirmación */}
-      {enviado && (
-        <div className="md:col-span-2 flex justify-center items-center gap-2 mt-6 text-green-400 text-sm">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={2}
-            stroke="currentColor"
-            className="w-5 h-5 text-green-400 animate-pulse"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-          </svg>
-          <span>Mensaje enviado correctamente ✅</span>
-        </div>
-      )}
-    </form>
-  </div>
-</main>
-
-
-      {/* ===== PIE ===== */}
-      <footer className="w-full bg-black text-white py-10 border-t border-[#0099FF]/40">
-        <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
-          <div>
-            <h2 className="text-2xl font-semibold tracking-tight mb-2">Prismha</h2>
-            <p className="text-white/80 leading-relaxed text-sm">
-              Mirador de Gredos 7<br />
-              Madrid, España
-            </p>
-          </div>
-          <div className="text-sm space-y-2">
-            <p className="text-white/80">
-              Correo electrónico:{" "}
-              <a
-                href="mailto:prismhaagencia@prismha.com"
-                className="text-[#0099FF] hover:underline"
-              >
-                prismhaagencia@prismha.com
-              </a>
-            </p>
-            <Link
-              to="/politica-privacidad"
-              className="text-white/80 hover:text-[#0099FF] transition-colors"
-            >
-              Política de Privacidad
-            </Link>
-          </div>
-        </div>
-        <div className="mt-8 text-center text-white/50 text-xs">
-          © {new Date().getFullYear()} Prismha. Todos los derechos reservados.
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };

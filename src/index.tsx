@@ -1,463 +1,325 @@
-import React, { useRef } from "react";
+import React, { Suspense, lazy } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import Aurora from "./Aurora";
 import ScrollReveal from "./ScrollReveal";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import PoliticaPrivacidad from "./PoliticaPrivacidad";
-import Contacto from "./Contacto";
-import SaberMas from "./SaberMas";
-import Blog from "./blog";
-import BlogPost from "./BlogPost";
-import BlogPost2 from "./BlogPost2";
+import { HelmetProvider } from "react-helmet-async";
 
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import GlobalWrapper from "./components/GlobalWrapper";
+import SpotlightCard from "./components/ui/SpotlightCard";
+import Preloader from "./components/Preloader";
+import SEO from "./components/SEO";
+import DemoShowcase from "./components/demos/DemoShowcase";
 
+// Lazy load pages
+const PoliticaPrivacidad = lazy(() => import("./PoliticaPrivacidad"));
+const Contacto = lazy(() => import("./Contacto"));
+const SaberMas = lazy(() => import("./SaberMas"));
+const CasosDeExito = lazy(() => import("./CasosDeExito"));
+const Blog = lazy(() => import("./blog"));
+const BlogPost = lazy(() => import("./BlogPost"));
+const BlogPost2 = lazy(() => import("./BlogPost2"));
 
 const App = () => {
-  const { scrollY } = useScroll();
-  
-  // Transformaciones para el encabezado al hacer scroll
-  const headerPaddingY = "0.30rem";
-const headerPaddingX = "2rem";
-const logoSize = useTransform(scrollY, [0, 100], [60, 50]);
-const headerWidth = useTransform(scrollY, [0, 50], ["67%", "55%"]);
-const scrollContainerRef = useRef(null);
-const [showMenu, setShowMenu] = React.useState(false);
+  // Animaciones de texto
+  const heroTextVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
+  };
 
   return (
-    <div className="relative bg-black min-h-screen w-full overflow-hidden">
-      {/* Efecto Aurora de fondo */}
-      <div className="absolute inset-0 w-full h-screen">
+    <div className="relative bg-black w-full overflow-hidden min-h-screen text-white selection:bg-primary/30 selection:text-white">
+      <SEO /> {/* Default SEO for Home */}
+      <Header />
+
+      {/* Efecto Aurora de fondo (Solo en Home) */}
+      <div className="absolute inset-0 w-full h-screen z-0 pointer-events-none">
         <Aurora
           colorStops={["#0066FF", "#0099FF", "#0066FF"]}
           blend={0.5}
           amplitude={1.0}
           speed={0.5}
         />
-        
       </div>
 
-      {/* Encabezado fijo con animación */}
-      <motion.header 
-  className="fixed top-4 left-1/2 z-50 -translate-x-1/2 w-[90%] md:w-[65%] max-w-[1400px]"
-  style={{ 
-    paddingTop: headerPaddingY,
-    paddingBottom: headerPaddingY,
-  }}
->
-  <motion.nav
-    className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-full flex items-center justify-between shadow-2xl px-5 md:px-6 overflow-hidden"
-    style={{ height: "60px" }}
-  >
-    {/* Logo */}
-    <div className="flex items-center gap-3 pl-2">
-      <motion.img
-        src="/logo.png"
-        alt="Prismha Logo"
-        className="object-contain w-10 md:w-12"
-        style={{ transform: "scale(2)" }}
-      />
-    </div>
-
-    {/* Menú normal en desktop */}
-    <div className="hidden md:flex items-center gap-4">
-      <button
-        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        className="text-white/80 hover:text-white transition-colors text-sm md:text-base font-normal tracking-tight px-2"
-        style={{
-          fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
-        }}
-      >
-        Home
-      </button>
-
-      <a
-        href="#servicios"
-        className="text-white/80 hover:text-white transition-colors text-sm md:text-base font-normal tracking-tight px-2"
-        style={{
-          fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
-        }}
-      >
-        Servicios
-      </a>
-
-      <Link
-        to="/blog"
-        className="text-white/80 hover:text-white transition-all duration-300 text-sm md:text-base font-normal tracking-tight px-2"
-        style={{
-          fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
-        }}
-      >
-        Blog
-      </Link>
-
-      <Link
-        to="/contacto"
-        className="backdrop-blur-xl bg-white/15 border border-white/30 rounded-full px-4 py-2 text-white font-normal text-sm transition-all duration-300 hover:bg-[#0066FF]/20 hover:border-[#0066FF]/40 shadow-lg"
-        style={{
-          fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
-        }}
-      >
-        Contacto
-      </Link>
-    </div>
-
-    {/* Menú móvil */}
-    <div className="md:hidden">
-      <button
-        onClick={() => setShowMenu(!showMenu)}
-        className="text-white text-2xl"
-      >
-        ☰
-      </button>
-    </div>
-  </motion.nav>
-
-  {/* Dropdown móvil */}
-  {showMenu && (
-    <div className="absolute right-0 mt-3 w-48 bg-black/80 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg flex flex-col items-start p-4 space-y-3 md:hidden">
-      <a href="#" className="text-white/90 hover:text-[#19A1FF] transition">Home</a>
-      <a href="#servicios" className="text-white/90 hover:text-[#19A1FF] transition">Servicios</a>
-      <Link to="/blog" className="text-white/90 hover:text-[#19A1FF] transition">Blog</Link>
-      <Link to="/contacto" className="text-white/90 hover:text-[#19A1FF] transition">Contacto</Link>
-    </div>
-  )}
-</motion.header>
-
-
-      {/* Contenido principal */}
-      <div className="relative z-10 flex items-center justify-center min-h-screen px-8 pt-3">
+      {/* Contenido principal Hero */}
+      <div className="relative z-10 flex items-center justify-center min-h-screen px-8 pt-20">
         <div className="text-center max-w-5xl">
-          <h1
-            className="text-white text-4xl md:text-5xl lg:text-6xl font-light mb-6 leading-tight animate-slide-up-delayed"
-            style={{
-              fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
-            }}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            className="mb-6 inline-block px-4 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md"
           >
-            Impulsa tu empresa con el poder de la Inteligencia Artificial.
-          </h1>
-          <p
-            className="text-white/80 text-lg md:text-xl lg:text-2xl font-light mb-10 animate-slide-up-delayed-more"
-            style={{
-              fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
-            }}
+            <span className="text-sm font-medium text-primary tracking-wide uppercase">Agencia de Automatización e IA</span>
+          </motion.div>
+
+          <motion.h1
+            initial="hidden"
+            animate="visible"
+            variants={heroTextVariants}
+            className="text-white text-4xl md:text-6xl lg:text-7xl font-light mb-8 leading-tight tracking-tight"
           >
-            Optimiza procesos, mejora decisiones y destaca en un mercado competitivo.
-          </p>
+            Impulsa tu empresa con el poder de la <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-blue-400 to-primary bg-300% animate-gradient font-normal">Inteligencia Artificial</span>.
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.8 }}
+            className="text-white/70 text-lg md:text-xl font-light mb-12 max-w-3xl mx-auto leading-relaxed"
+          >
+            Optimiza procesos, mejora decisiones y destaca en un mercado competitivo con soluciones a medida que trabajan por ti las 24 horas.
+          </motion.p>
 
           {/* Botones principales */}
-          <div className="flex gap-4 justify-center animate-slide-up-delayed-more-2">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+            className="flex flex-col sm:flex-row gap-6 justify-center items-center"
+          >
             <a
-  href="#servicios"
-  className="text-white/80 hover:text-white transition-colors text-sm md:text-base font-normal tracking-tight px-4 py-2"
-  style={{
-    fontFamily:
-      '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif',
-  }}
->
-  Servicios
-</a>
+              href="#servicios"
+              className="text-white/80 hover:text-white transition-colors text-lg font-normal tracking-tight px-6 py-3 border-b border-transparent hover:border-primary"
+            >
+              Explorar Soluciones
+            </a>
 
             <Link
-  to="/contacto"
-  className="backdrop-blur-xl bg-white/15 border border-white/30 rounded-full px-5 py-2 text-white font-normal text-sm transition-all duration-300 hover:bg-[#0066FF]/20 hover:border-[#0066FF]/40 shadow-lg"
-  style={{
-    fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
-  }}
->
-  Contacto
-</Link>
-
-          </div>
+              to="/contacto"
+              className="group relative px-8 py-4 rounded-full bg-white text-black font-medium text-lg transition-all hover:bg-gray-200 hover:scale-105 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)]"
+            >
+              Comenzar Ahora
+              <div className="absolute inset-0 rounded-full ring-2 ring-white/50 animate-pulse group-hover:animate-none" />
+            </Link>
+          </motion.div>
         </div>
       </div>
 
-      {/* Texto ScrollReveal */}
-      <section className="relative z-10 w-full flex items-start justify-center px-8 py-10 bg-black">
+      {/* Texto ScrollReveal - Ajustado (Punto medio) */}
+      <section className="relative z-10 w-full flex items-start justify-center px-8 py-32 bg-black">
         <div className="max-w-4xl mx-auto">
           <ScrollReveal
-            baseOpacity={0}
+            baseOpacity={0.1}
             enableBlur={true}
-            baseRotation={5}
-            blurStrength={20}
-
+            baseRotation={2}
+            blurStrength={10}
             containerClassName="text-center"
-            textClassName="text-white"
+            textClassName="text-white text-2xl md:text-4xl font-light leading-relaxed"
           >
-            Con Prismha, las empresas aceleran su crecimiento gracias a la inteligencia artificial.
-            Automatizamos y optimizamos procesos para generar resultados reales, y nuestros clientes ya disfrutan de más tiempo, más ahorro y un negocio en expansión.
+            En Prismha, no solo implementamos tecnología; diseñamos ecosistemas digitales que trabajan por ti.
+            Transformamos tu visión en una realidad operativa, permitiéndote escalar sin límites y centrarte en tu crecimiento.
           </ScrollReveal>
         </div>
       </section>
 
-      {/* Sección título "Servicios" */}
-      <section className="relative z-10 flex flex-col items-center mt-12 mb-4">
-        <div className="service-title-box">
-          <p className="subtitle">Nuestros</p>
-          <h2 className="main-title">Servicios</h2>
+      {/* Demo Showcase - Automatización en Acción */}
+      <DemoShowcase />
+
+      {/* Sección título "Servicios" - Corregido */}
+      <section className="relative z-10 flex flex-col items-center mt-12 mb-16">
+        <div className="flex flex-col items-center justify-center space-y-2">
+          <p className="text-primary text-sm uppercase tracking-widest font-medium">Nuestras Soluciones</p>
+          <h2 className="text-white text-3xl md:text-5xl font-light">Servicios Especializados</h2>
         </div>
       </section>
 
-      {/* Tarjetas de servicios */}
-      <section id="servicios" className="services-grid">
-        <div className="service-card">
-          <h3>Automatizaciones</h3>
-          <p>
-            Transformamos tareas complejas en procesos ágiles para reducir costos y acelerar resultados.
-          </p>
-          <ul>
-            <li>Tareas Básicas – Automatiza correos, avisos y reportes con IA.</li>
-            <li>Operaciones Internas – Conecta tus herramientas y evita tareas manuales.</li>
-            <li>Avanzada – Procesos avanzados adaptados a tu empresa.</li>
+      {/* Tarjetas de servicios con Spotlight */}
+      <section id="servicios" className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-32">
+        <SpotlightCard>
+          <div className="h-12 w-12 rounded-lg bg-primary/20 flex items-center justify-center mb-6">
+            <svg className="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+          </div>
+          <h3 className="text-2xl font-semibold text-white mb-4">Automatizaciones</h3>
+          <p className="text-white/70 mb-6 leading-relaxed">Transformamos tareas manuales y repetitivas en flujos de trabajo eficientes que funcionan solos.</p>
+          <ul className="space-y-3 text-white/60 text-sm">
+            <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-primary"></span>Gestión de Leads y CRM</li>
+            <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-primary"></span>Facturación Automática</li>
+            <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-primary"></span>Sincronización de Datos</li>
           </ul>
-        </div>
+        </SpotlightCard>
 
-        <div className="service-card">
-          <h3>Chatbots y Agentes IA</h3>
-          <p>
-            Agentes inteligentes que toman decisiones autónomas en procesos y departamentos, adaptándose a cada necesidad de tu negocio.
-          </p>
-          <ul>
-            <li>Atención – Respuestas 24/7 a clientes.</li>
-            <li>Ventas – Califica y cierra prospectos con más precisión.</li>
-            <li>Soporte – Ayuda a empleados y FAQs en tiempo real.</li>
+        <SpotlightCard>
+          <div className="h-12 w-12 rounded-lg bg-primary/20 flex items-center justify-center mb-6">
+            <svg className="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" /></svg>
+          </div>
+          <h3 className="text-2xl font-semibold text-white mb-4">Chatbots IA</h3>
+          <p className="text-white/70 mb-6 leading-relaxed">Asistentes virtuales entrenados con tu información para atender a tus clientes como lo harías tú.</p>
+          <ul className="space-y-3 text-white/60 text-sm">
+            <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-primary"></span>Atención 24/7</li>
+            <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-primary"></span>Cualificación de Clientes</li>
+            <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-primary"></span>Agendamiento de Citas</li>
           </ul>
-        </div>
+        </SpotlightCard>
 
-        <div className="service-card">
-          <h3>Funnels de Venta</h3>
-          <p>
-            Captación inteligente, seguimiento automático y cierres de venta optimizados.
-          </p>
-          <ul>
-            <li>Captación – Páginas y formularios personalizados.</li>
-            <li>Seguimiento – Mensajes y correos estratégicos.</li>
-            <li>Cierre – Ofertas y recordatorios que convierten.</li>
+        <SpotlightCard>
+          <div className="h-12 w-12 rounded-lg bg-primary/20 flex items-center justify-center mb-6">
+            <svg className="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
+          </div>
+          <h3 className="text-2xl font-semibold text-white mb-4">Agentes de Voz</h3>
+          <p className="text-white/70 mb-6 leading-relaxed">La próxima frontera de la comunicación. IAs capaces de mantener llamadas telefónicas naturales.</p>
+          <ul className="space-y-3 text-white/60 text-sm">
+            <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-primary"></span>Llamadas Entrantes/Salientes</li>
+            <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-primary"></span>Confirmación de Asistencia</li>
+            <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-primary"></span>Encuestas de Satisfacción</li>
           </ul>
-        </div>
+        </SpotlightCard>
 
-        <div className="service-card wide">
-          <h3>Planes Básicos</h3>
-          <p>Automatizaciones sencillas para comenzar: procesos simples y rápidos de implementar.</p>
-          <ul>
-            <li>Tareas Básicas – Correos, recordatorios y reportes sin esfuerzo.</li>
-            <li>Operaciones Internas – Conecta sistemas y coordina departamentos.</li>
-            <li>Avanzada – Procesos complejos con soluciones a medida.</li>
+        <SpotlightCard>
+          <div className="h-12 w-12 rounded-lg bg-primary/20 flex items-center justify-center mb-6">
+            <svg className="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+          </div>
+          <h3 className="text-2xl font-semibold text-white mb-4">Funnels de Venta</h3>
+          <p className="text-white/70 mb-6 leading-relaxed">Sistemas de captación y conversión diseñados para maximizar el retorno de inversión.</p>
+          <ul className="space-y-3 text-white/60 text-sm">
+            <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-primary"></span>Landing Pages Dinámicas</li>
+            <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-primary"></span>Email Marketing Automatizado</li>
+            <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-primary"></span>Retargeting Inteligente</li>
           </ul>
-        </div>
+        </SpotlightCard>
 
-        <div className="service-card wide">
-          <h3>Consultoría Empresarial</h3>
-          <p>Estrategias personalizadas con análisis de datos y soluciones hechas a medida.</p>
-          <ul>
-            <li>Diagnóstico Exprés – Análisis rápido para identificar oportunidades inmediatas.</li>
-            <li>Estrategia a Medida – Plan personalizado según necesidades.</li>
-            <li>Consultoría Integral – Implementación completa de soluciones.</li>
-          </ul>
-        </div>
+        <SpotlightCard className="md:col-span-2">
+          <div className="flex flex-col md:flex-row gap-8 items-center h-full">
+            <div className="flex-1">
+              <div className="h-12 w-12 rounded-lg bg-primary/20 flex items-center justify-center mb-6">
+                <svg className="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              </div>
+              <h3 className="text-3xl font-semibold text-white mb-4">Consultoría Estratégica</h3>
+              <p className="text-white/70 text-lg leading-relaxed mb-6">
+                No solo implementamos herramientas, diseñamos la hoja de ruta digital de tu empresa.
+                Analizamos tus cuellos de botella y creamos un plan de acción claro para escalar tu negocio con tecnología.
+              </p>
+              <Link to="/contacto" className="inline-flex items-center gap-2 text-primary hover:text-white transition-colors font-medium">
+                Solicitar Auditoría Gratuita <span className="text-xl">→</span>
+              </Link>
+            </div>
+          </div>
+        </SpotlightCard>
       </section>
 
-      {/* Botones debajo de las tarjetas */}
-      <div className="relative z-10 flex justify-center gap-4 pb-16">
-        <Link
-  to="/sabermas"
-  className="glass-button backdrop-blur-xl bg-white/15 border border-white/30 rounded-full px-6 py-2 text-white font-normal text-sm transition-all duration-300 hover:bg-[#0066FF]/20 hover:border-[#0066FF]/40 shadow-lg"
->
-  Saber más
-</Link>
-        <Link
-  to="/contacto"
-  className="backdrop-blur-xl bg-white/15 border border-white/30 rounded-full px-5 py-2 text-white font-normal text-sm transition-all duration-300 hover:bg-[#0066FF]/20 hover:border-[#0066FF]/40 shadow-lg"
-  style={{
-    fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
-  }}
->
-  Contacto
-</Link>
-      </div>
-     {/* Nueva sección con cuadro glassmorphism */}
-<section className="relative z-10 w-full flex justify-center px-8 py-16 bg-black">
-  <div className="max-w-4xl w-full backdrop-blur-xl bg-black/60 rounded-3xl p-10 shadow-2xl border border-white/10">
-    {/* Título grande */}
-    <h2 
-      className="text-white text-2xl md:text-3xl lg:text-4xl font-light mb-6 text-center leading-tight"
-      style={{ 
-        fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif'
-      }}
-    >
-      Enfrenta el futuro con confianza junto a Prismha
-    </h2>
-    
-    {/* Texto descriptivo */}
-    <p 
-      className="text-white/80 text-base md:text-lg font-light mb-8 text-center leading-relaxed"
-      style={{ 
-        fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif'
-      }}
-    >
-      Desarrollamos sistemas de automatización, asistentes virtuales y herramientas de análisis inteligente que te ayudan a ahorrar tiempo, reducir costes y crecer de forma sostenible.
-    </p>
-  </div>
-</section>
-
-{/* Sección de Preguntas Frecuentes */}
-<section className="relative z-10 w-full px-6 py-16 bg-black">
-  {/* Título */}
-  <h2 
-    className="text-white text-2xl md:text-3xl lg:text-4xl font-light text-center mb-12"
-    style={{ 
-      fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif'
-    }}
-  >
-    Preguntas Frecuentes
-  </h2>
-
-  {/* Contenedor de preguntas */}
-  <div className="max-w-4xl mx-auto space-y-4">
-    
-    {/* Pregunta */}
-    {[
-      {
-        q: "¿Por qué contratar a Prismha?",
-        a: "Porque no solo implementamos tecnología, sino que entendemos tu negocio. Te acompañamos en cada paso para que la IA se convierta en un verdadero aliado estratégico.",
-      },
-      {
-        q: "¿Imponéis permanencia?",
-        a: "No. Creemos en la libertad de nuestros clientes. Te quedas con nosotros porque ves resultados, no por contratos rígidos.",
-      },
-      {
-        q: "¿Dónde trabajáis?",
-        a: "Somos 100% digitales, lo que nos permite trabajar con empresas en cualquier parte del mundo.",
-      },
-      {
-        q: "¿Cuánto tiempo se tarda en implementar la IA?",
-        a: "Depende del alcance del proyecto. Algunos servicios se pueden activar en pocos días, mientras que soluciones más complejas requieren varias semanas. Siempre buscamos la mayor rapidez sin perder calidad.",
-      },
-      {
-        q: "¿Ofrecéis vosotros todo el servicio?",
-        a: "Sí. Desde la consultoría inicial, hasta el desarrollo, integración y soporte. Te entregamos una solución completa y funcional.",
-      },
-      {
-        q: "¿Cómo empiezo?",
-        a: "Muy fácil: agenda una llamada con nosotros, cuéntanos tu reto y en menos de 48 horas tendrás una propuesta adaptada a tus necesidades.",
-      },
-    ].map((item, index) => (
-      <details 
-        key={index}
-        className="backdrop-blur-lg bg-black/60 rounded-2xl border border-[#0099FF]/60 hover:border-[#0099FF]/90 transition-all duration-300 shadow-lg overflow-hidden group"
-      >
-        <summary 
-          className="cursor-pointer p-5 text-white text-base md:text-lg font-medium list-none flex justify-between items-center"
-          style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif' }}
-        >
-          {item.q}
-          <span className="text-[#0099FF] text-xl font-bold transition-transform duration-300 group-open:rotate-45">
-            +
-          </span>
-        </summary>
-        <div className="px-5 pb-5">
-          <p 
-            className="text-white/80 text-sm md:text-base leading-relaxed"
-            style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif' }}
+      {/* CTA Saber Más */}
+      <section className="relative z-10 w-full px-6 py-16 bg-black">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl font-light text-white mb-6">
+            ¿Quieres saber más sobre nuestros servicios?
+          </h2>
+          <p className="text-white/70 text-lg mb-8 max-w-2xl mx-auto">
+            Agenda una reunión de 30 minutos con nuestro equipo y descubre cómo podemos ayudarte a transformar tu negocio.
+          </p>
+          <Link
+            to="/sabermas"
+            className="inline-block px-8 py-4 rounded-full bg-primary text-white font-medium text-lg transition-all hover:bg-primary-hover hover:scale-105 hover:shadow-lg hover:shadow-primary/25"
           >
-            {item.a}
-          </p>
+            Agendar Reunión
+          </Link>
         </div>
-      </details>
-    ))}
-  </div>
-</section>
-{/* Botones debajo de las tarjetas */}
-      <div className="relative z-10 flex justify-center gap-4 pb-16">
-        <Link
-  to="/sabermas"
-  className="glass-button backdrop-blur-xl bg-white/15 border border-white/30 rounded-full px-6 py-2 text-white font-normal text-sm transition-all duration-300 hover:bg-[#0066FF]/20 hover:border-[#0066FF]/40 shadow-lg"
->
-  Saber más
-</Link>
+      </section>
 
-        <Link
-  to="/contacto"
-  className="backdrop-blur-xl bg-white/15 border border-white/30 rounded-full px-5 py-2 text-white font-normal text-sm transition-all duration-300 hover:bg-[#0066FF]/20 hover:border-[#0066FF]/40 shadow-lg"
-  style={{
-    fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
-  }}
->
-  Contacto
-</Link>
-      </div>
-     {/* === PIE DE PÁGINA === */}
-<footer className="w-full bg-black text-white py-10 border-t border-[#0099FF]/40 mt-20">
-  <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
-    
-    {/* Nombre y dirección */}
-    <div>
-      <h2 
-        className="text-2xl font-semibold tracking-tight mb-2"
-        style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif' }}
-      >
-        Prismha
-      </h2>
-      <p 
-        className="text-white/80 leading-relaxed text-sm"
-        style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif' }}
-      >
-        Mirador de Gredos 7<br />
-        Madrid, España
-      </p>
-    </div>
+      {/* Nueva Sección: Proceso de Trabajo - Colores Ajustados */}
+      <section className="relative z-10 w-full px-6 py-24 bg-black border-y border-white/5">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-light text-white mb-6">Cómo trabajamos</h2>
+            <p className="text-white/60 max-w-2xl mx-auto text-lg">Un proceso transparente y ágil diseñado para obtener resultados desde la primera semana.</p>
+          </div>
 
-    {/* Correo y política */}
-    <div className="text-sm space-y-2">
-      <p 
-        className="text-white/80"
-        style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif' }}
-      >
-        Correo electrónico:{" "}
-        <a 
-          href="mailto:prismhaagencia@prismha.com" 
-          className="text-[#0099FF] hover:underline"
-        >
-          prismhaagencia@prismha.com
-        </a>
-      </p>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            {[
+              { step: "01", title: "Análisis", desc: "Estudiamos tus procesos actuales para identificar ineficiencias y oportunidades." },
+              { step: "02", title: "Estrategia", desc: "Diseñamos una solución a medida que se integra perfectamente con tu ecosistema." },
+              { step: "03", title: "Implementación", desc: "Desarrollo ágil y puesta en marcha de las automatizaciones y sistemas." },
+              { step: "04", title: "Optimización", desc: "Monitorización continua y mejoras basadas en datos reales." }
+            ].map((item, i) => (
+              <div key={i} className="relative p-6 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors group">
+                <div className="text-5xl font-bold text-white/10 mb-4 group-hover:text-primary/20 transition-colors">{item.step}</div>
+                <h3 className="text-xl font-semibold text-white mb-3">{item.title}</h3>
+                <p className="text-white/60 leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-      {/* Enlace de Política de Privacidad */}
-      <Link 
-        to="/politica-privacidad"
-        className="text-white/80 hover:text-[#0099FF] transition-colors"
-        style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif' }}
-      >
-        Política de Privacidad
-      </Link>
-    </div>
-  </div>
+      {/* FAQ Section - Expandido y Mejorado */}
+      <section className="relative z-10 w-full px-6 py-32 bg-black">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-white text-3xl md:text-5xl font-light text-center mb-16">
+            Preguntas Frecuentes
+          </h2>
+          <div className="space-y-4">
+            {[
+              {
+                q: "¿Por qué debería invertir en automatización ahora?",
+                a: "El mercado se mueve rápido. Las empresas que automatizan sus procesos reducen costes operativos hasta un 30% y liberan a su equipo para tareas de alto valor. No es solo tecnología, es ventaja competitiva."
+              },
+              {
+                q: "¿Es necesario tener conocimientos técnicos?",
+                a: "En absoluto. Nosotros nos encargamos de toda la complejidad técnica. Te entregamos sistemas llave en mano y formamos a tu equipo para que sepan utilizarlos sin depender de nosotros."
+              },
+              {
+                q: "¿Cuánto tiempo tarda en implementarse?",
+                a: "Depende de la complejidad. Automatizaciones sencillas pueden estar listas en 1-2 semanas. Proyectos integrales de transformación digital suelen llevar entre 4 y 8 semanas. Siempre trabajamos por hitos para que veas resultados pronto."
+              },
+              {
+                q: "¿Qué pasa si mis herramientas actuales no son compatibles?",
+                a: "Somos expertos en integración. Trabajamos con APIs y herramientas como n8n o Make que nos permiten conectar prácticamente cualquier software moderno. Si tiene una interfaz digital, podemos conectarlo."
+              },
+              {
+                q: "¿Ofrecéis soporte post-implementación?",
+                a: "Sí. No te dejamos solo. Ofrecemos periodos de garantía y planes de mantenimiento para asegurar que todo siga funcionando como un reloj a medida que tu empresa evoluciona."
+              },
+              {
+                q: "¿Cómo empezamos?",
+                a: "Lo más fácil es agendar una llamada de descubrimiento gratuita. En 30 minutos evaluaremos si podemos ayudarte y te daremos una hoja de ruta inicial sin compromiso."
+              }
+            ].map((item, index) => (
+              <details
+                key={index}
+                className="group bg-white/5 rounded-2xl border border-white/10 open:bg-white/10 transition-all duration-300 overflow-hidden"
+              >
+                <summary className="cursor-pointer p-6 text-white text-lg md:text-xl font-medium flex justify-between items-center list-none hover:bg-white/5 transition-colors">
+                  {item.q}
+                  <span className="text-primary text-2xl transition-transform duration-300 group-open:rotate-45 flex-shrink-0 ml-4">+</span>
+                </summary>
+                <div className="px-6 pb-8 pt-2 text-white/70 leading-relaxed text-base md:text-lg border-t border-white/5">
+                  {item.a}
+                </div>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
 
-  <div className="mt-8 text-center text-white/50 text-xs">
-    © {new Date().getFullYear()} Prismha. Todos los derechos reservados.
-  </div>
-</footer>
-
-
+      <Footer />
     </div>
   );
 };
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-  <Route path="/" element={<App />} />
-  <Route path="/politica-privacidad" element={<PoliticaPrivacidad />} />
-  <Route path="/contacto" element={<Contacto />} />
-  <Route path="/sabermas" element={<SaberMas />} />
-  <Route path="/blog" element={<Blog />} />
- <Route path="/blogpost" element={<BlogPost />} />
-<Route path="/blogpost2" element={<BlogPost2 />} />
-
-
-</Routes>
-    </BrowserRouter>
+    <HelmetProvider>
+      <BrowserRouter>
+        <GlobalWrapper>
+          <Preloader />
+          <Suspense fallback={<div className="min-h-screen bg-black flex items-center justify-center"><div className="w-8 h-8 border-t-2 border-primary rounded-full animate-spin"></div></div>}>
+            <Routes>
+              <Route path="/" element={<App />} />
+              <Route path="/politica-privacidad" element={<PoliticaPrivacidad />} />
+              <Route path="/contacto" element={<Contacto />} />
+              <Route path="/sabermas" element={<SaberMas />} />
+              <Route path="/casos-de-exito" element={<CasosDeExito />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/blogpost" element={<BlogPost />} />
+              <Route path="/blogpost2" element={<BlogPost2 />} />
+            </Routes>
+          </Suspense>
+        </GlobalWrapper>
+      </BrowserRouter>
+    </HelmetProvider>
   </React.StrictMode>
 );
