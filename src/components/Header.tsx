@@ -27,12 +27,12 @@ const Header = () => {
                 className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-full flex items-center justify-between shadow-2xl px-5 md:px-6 overflow-hidden h-[60px]"
             >
                 {/* Logo */}
-                <Link to="/" className="flex items-center gap-3 pl-2 group">
+                <Link to="/" className="flex items-center gap-3 pl-6 md:pl-8 group">
                     <motion.img
                         src="/logo.png?v=2"
                         alt="Prismha Logo"
-                        className="object-contain w-10 md:w-12 transition-transform duration-500 group-hover:rotate-180"
-                        style={{ transform: "scale(1.5)" }}
+                        className="object-contain w-14 md:w-16 transition-transform duration-500 group-hover:rotate-180"
+                        style={{ transform: "scale(2)" }}
                     />
                 </Link>
 
